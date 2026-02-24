@@ -1,6 +1,6 @@
 // src/common/pipes/normalize-input.pipe.ts
 
-import { PipeTransform, Injectable } from '@nestjs/common';
+import { Injectable, PipeTransform } from '@nestjs/common';
 import { normalizePersian } from '../utils/normalize-persian';
 
 const SKIP_KEYS = [
@@ -34,12 +34,12 @@ export class NormalizeInputPipe implements PipeTransform {
 
     if (input !== null && typeof input === 'object') {
       return Object.fromEntries(
-          Object.entries(input).map(([key, value]) => {
-            if (this.shouldSkip(key)) {
-              return [key, value];
-            }
-            return [key, this.normalize(value)];
-          }),
+        Object.entries(input).map(([key, value]) => {
+          if (this.shouldSkip(key)) {
+            return [key, value];
+          }
+          return [key, this.normalize(value)];
+        }),
       );
     }
 

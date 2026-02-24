@@ -1,9 +1,5 @@
 // src/common/pipes/global-validation.pipe.ts
-import {
-  ValidationPipe,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, ValidationPipe } from '@nestjs/common';
 import { ValidationError } from 'class-validator';
 
 export function createGlobalValidationPipe() {

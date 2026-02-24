@@ -2,30 +2,21 @@
 import {
   CallHandler,
   ExecutionContext,
+  HttpException,
   Injectable,
   NestInterceptor,
-  HttpException,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
-import { logger } from '../winston.logger';
 import { RequestWithContext } from '../types/request-with-context.type';
+import { logger } from '../winston.logger';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler,
-  ): Observable<any> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest<RequestWithContext>();
     const start = Date.now();
 
-    const {
-      method,
-      originalUrl: path,
-      ip,
-      requestId,
-      user,
-    } = req;
+    const { method, originalUrl: path, ip, requestId, user } = req;
 
     return next.handle().pipe(
       tap({
@@ -46,10 +37,7 @@ export class LoggingInterceptor implements NestInterceptor {
         error: (err) => {
           const durationMs = Date.now() - start;
 
-          const status =
-            err instanceof HttpException
-              ? err.getStatus()
-              : 500;
+          const status = err instanceof HttpException ? err.getStatus() : 500;
 
           const level = status >= 500 ? 'error' : 'warn';
 
@@ -61,8 +49,7 @@ export class LoggingInterceptor implements NestInterceptor {
             ip,
             userId: user?.id,
             durationMs,
-            errorMessage:
-              err instanceof Error ? err.message : String(err),
+            errorMessage: err instanceof Error ? err.message : String(err),
           });
         },
       }),
