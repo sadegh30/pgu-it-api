@@ -5,11 +5,173 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  ADMIN
+  SUPPORT
+  STUDENT
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  firstName          String?             @db.VarChar(50)
+  lastName           String?             @db.VarChar(50)
+  phone              String?             @unique @db.VarChar(11)
+  phoneVerified      Boolean             @default(false)
+  email              String?             @unique @db.VarChar(255)
+  emailVerified      Boolean             @default(false)
+  passwordHash       String?             @db.VarChar(255)
+  lastLoginAt        DateTime?
+  role               Role                @default(STUDENT)
+  loginCount         Int                 @default(0)
+  isActive           Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  loginLogs          LoginLog[]
+  userProfile        UserProfile?
+  refreshTokens      RefreshToken[]
+  emailVerifications EmailVerification[]
+  passwordResets     PasswordReset[]
+
+  @@index([email])
+  @@index([phone])
+  @@index([isActive])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model UserProfile {
+  id           String    @id @default(cuid())
+  avatarUrl    String?   @db.VarChar(255)
+  gender       Gender?
+  nationalCode String?   @db.VarChar(10)
+  birthDate    DateTime?
+  bio          String?   @db.Text
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String    @unique
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model PhoneOtp {
+  id          String   @id @default(cuid())
+  phone       String   @db.VarChar(11)
+  codeHash    String
+  expiresAt   DateTime
+  attempts    Int      @default(0) @db.SmallInt
+  used        Boolean  @default(false)
+  resendCount Int      @default(0) @db.SmallInt
+  createdAt   DateTime @default(now())
+
+  @@index([phone, used, expiresAt])
+}
+
+model RefreshToken {
+  id           String   @id @default(cuid())
+  tokenHash    String   @db.VarChar(255)
+  revoked      Boolean  @default(false)
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  replacedById String?
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@index([tokenHash])
+  @@index([userId, revoked])
+  @@index([expiresAt])
+}
+
+model EmailVerification {
+  id        String   @id @default(cuid())
+  tokenHash String   @db.VarChar(255)
+  used      Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId, used])
+  @@index([expiresAt])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  tokenHash String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId, used])
+  @@index([expiresAt])
+}
+
+model File {
+  id           String   @id @default(cuid())
+  filename     String   @db.VarChar(255)
+  originalName String   @db.VarChar(255)
+  mimeType     String   @db.VarChar(255)
+  size         Int
+  path         String   @db.VarChar(255)
+  url          String   @db.VarChar(255)
+  used         Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([filename])
+}
+
+model LoginLog {
+  id        String   @id @default(cuid())
+  ipAddress String?  @db.VarChar(45)
+  userAgent String?  @db.Text
+  isSuccess Boolean
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([isSuccess, createdAt])
+  @@index([ipAddress])
+}
+
+model ServerErrorLog {
+  id        String   @id @default(cuid())
+  status    Int
+  message   String   @db.Text
+  stack     String?  @db.Text
+  path      String?
+  method    String?
+  ip        String?
+  userId    String?
+  requestId String?
+  createdAt DateTime @default(now())
+
+  @@index([status, createdAt])
+  @@index([userId])
+  @@index([requestId])
+}
+
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique @db.VarChar(255)
+  label       String   @unique @db.VarChar(255)
+  value       String   @db.VarChar(255)
+  description String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+/**
+ * website spesific models
+ */

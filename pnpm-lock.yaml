@@ -23,6 +23,9 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.13(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)
+      '@nestjs/serve-static':
+        specifier: ^5.0.4
+        version: 5.0.4(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)(express@5.2.1)
       '@nestjs/swagger':
         specifier: ^11.2.6
         version: 11.2.6(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)
@@ -53,6 +56,9 @@ importers:
       ms:
         specifier: ^2.1.3
         version: 2.1.3
+      multer:
+        specifier: ^2.0.2
+        version: 2.0.2
       passport:
         specifier: ^0.7.0
         version: 0.7.0
@@ -84,12 +90,18 @@ importers:
       '@nestjs/testing':
         specifier: ^11.0.1
         version: 11.1.13(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)(@nestjs/platform-express@11.1.13)
+      '@types/cookie-parser':
+        specifier: ^1.4.10
+        version: 1.4.10(@types/express@5.0.6)
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.6
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
+      '@types/multer':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@types/node':
         specifier: ^22.10.7
         version: 22.19.11
@@ -769,6 +781,22 @@ packages:
     peerDependencies:
       typescript: '>=4.8.2'
 
+  '@nestjs/serve-static@5.0.4':
+    resolution: {integrity: sha512-3kO1M9D3vsPyWPFardxIjUYeuolS58PnhCoBTkS7t3BrdZFZCKHnBZ15js+UOzOR2Q6HmD7ssGjLd0DVYVdvOw==}
+    peerDependencies:
+      '@fastify/static': ^8.0.4
+      '@nestjs/common': ^11.0.2
+      '@nestjs/core': ^11.0.2
+      express: ^5.0.1
+      fastify: ^5.2.1
+    peerDependenciesMeta:
+      '@fastify/static':
+        optional: true
+      express:
+        optional: true
+      fastify:
+        optional: true
+
   '@nestjs/swagger@11.2.6':
     resolution: {integrity: sha512-oiXOxMQqDFyv1AKAqFzSo6JPvMEs4uA36Eyz/s2aloZLxUjcLfUMELSLSNQunr61xCPTpwEOShfmO7NIufKXdA==}
     peerDependencies:
@@ -907,6 +935,11 @@ packages:
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
 
+  '@types/cookie-parser@1.4.10':
+    resolution: {integrity: sha512-B4xqkqfZ8Wek+rCOeRxsjMS9OgvzebEzzLYw7NHYuvzb7IdxOkI0ZHGgeEBX4PUM7QGVvNSK60T3OvWj3YfBRg==}
+    peerDependencies:
+      '@types/express': '*'
+
   '@types/cookiejar@2.1.5':
     resolution: {integrity: sha512-he+DHOWReW0nghN24E1WUqM0efK4kI9oTqDm6XmK8ZPe2djZ90BSNdGnIyCLzCPw7/pogPlGbzI2wHGGmi4O/Q==}
 
@@ -951,6 +984,9 @@ packages:
 
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
+
+  '@types/multer@2.0.0':
+    resolution: {integrity: sha512-C3Z9v9Evij2yST3RSBktxP9STm6OdMc5uR1xF1SGr98uv8dUlAL2hqwrZ3GVB3uyMyiegnscEK6PGtYvNrjTjw==}
 
   '@types/node@22.19.11':
     resolution: {integrity: sha512-BH7YwL6rA93ReqeQS1c4bsPpcfOmJasG+Fkr6Y59q83f9M1WcBRHR2vM+P9eOisYRcN3ujQoiZY8uk5W+1WL8w==}
@@ -4126,6 +4162,14 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
+  '@nestjs/serve-static@5.0.4(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)(express@5.2.1)':
+    dependencies:
+      '@nestjs/common': 11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@nestjs/core': 11.1.13(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.13)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      path-to-regexp: 8.3.0
+    optionalDependencies:
+      express: 5.2.1
+
   '@nestjs/swagger@11.2.6(@nestjs/common@11.1.13(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.13)(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)':
     dependencies:
       '@microsoft/tsdoc': 0.16.0
@@ -4269,6 +4313,10 @@ snapshots:
     dependencies:
       '@types/node': 22.19.11
 
+  '@types/cookie-parser@1.4.10(@types/express@5.0.6)':
+    dependencies:
+      '@types/express': 5.0.6
+
   '@types/cookiejar@2.1.5': {}
 
   '@types/eslint-scope@3.7.7':
@@ -4323,6 +4371,10 @@ snapshots:
   '@types/methods@1.1.4': {}
 
   '@types/ms@2.1.0': {}
+
+  '@types/multer@2.0.0':
+    dependencies:
+      '@types/express': 5.0.6
 
   '@types/node@22.19.11':
     dependencies:
