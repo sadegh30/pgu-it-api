@@ -16,8 +16,8 @@ import { Role } from '../common/enums/role.enum';
 import { UsersQueryDto } from './dto/users-query.dto';
 import { UsersService } from './users.service';
 
-@Controller('users')
-@Roles(Role.ADMIN)
+@Controller('admin/users')
+@Roles(Role.ADMIN, Role.SUPPORT)
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

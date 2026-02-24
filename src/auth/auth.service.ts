@@ -262,13 +262,13 @@ export class AuthService {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      domain: 'alphagift.ir',
+      domain: process.env.COOCKIE_DOMAIN,
     });
     res.clearCookie('refresh_token', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      domain: 'alphagift.ir',
+      domain: process.env.COOCKIE_DOMAIN,
     });
 
     return { message: 'کاربر با موفقیت خارج شد' };
@@ -571,7 +571,7 @@ export class AuthService {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      domain: 'alphagift.ir',
+      domain: process.env.COOCKIE_DOMAIN,
       maxAge: jwtConfig.accessCookieMaxAge,
     });
 
@@ -579,7 +579,7 @@ export class AuthService {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      domain: 'alphagift.ir',
+      domain: process.env.COOCKIE_DOMAIN,
 
       maxAge: jwtConfig.refreshCookieMaxAge,
     });

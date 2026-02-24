@@ -146,6 +146,39 @@ CREATE TABLE "Setting" (
     CONSTRAINT "Setting_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Website" (
+    "id" TEXT NOT NULL,
+    "title" VARCHAR(255) NOT NULL,
+    "imageUrl" VARCHAR(255),
+    "link" VARCHAR(255) NOT NULL,
+    "description" TEXT,
+    "helper" TEXT,
+    "status" BOOLEAN NOT NULL DEFAULT true,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Website_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Faq" (
+    "id" TEXT NOT NULL,
+    "question" VARCHAR(250) NOT NULL,
+    "answer" TEXT,
+    "priority" INTEGER NOT NULL DEFAULT 0,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deletedAt" TIMESTAMP(3),
+
+    CONSTRAINT "Faq_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
 
@@ -214,6 +247,27 @@ CREATE UNIQUE INDEX "Setting_key_key" ON "Setting"("key");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Setting_label_key" ON "Setting"("label");
+
+-- CreateIndex
+CREATE INDEX "Website_title_idx" ON "Website"("title");
+
+-- CreateIndex
+CREATE INDEX "Website_isActive_idx" ON "Website"("isActive");
+
+-- CreateIndex
+CREATE INDEX "Website_isDeleted_idx" ON "Website"("isDeleted");
+
+-- CreateIndex
+CREATE INDEX "Faq_question_idx" ON "Faq"("question");
+
+-- CreateIndex
+CREATE INDEX "Faq_priority_idx" ON "Faq"("priority");
+
+-- CreateIndex
+CREATE INDEX "Faq_isActive_idx" ON "Faq"("isActive");
+
+-- CreateIndex
+CREATE INDEX "Faq_isDeleted_idx" ON "Faq"("isDeleted");
 
 -- AddForeignKey
 ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

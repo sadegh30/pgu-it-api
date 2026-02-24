@@ -175,3 +175,39 @@ model Setting {
 /**
  * website spesific models
  */
+
+model Website {
+  id          String    @id @default(cuid())
+  title       String    @db.VarChar(255)
+  imageUrl    String?   @db.VarChar(255)
+  link        String    @db.VarChar(255)
+  description String?   @db.Text
+  helper      String?   @db.Text
+  status      Boolean   @default(true)
+  isActive    Boolean   @default(true)
+  isDeleted   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@index([title])
+  @@index([isActive])
+  @@index([isDeleted])
+}
+
+model Faq {
+  id        String    @id @default(cuid())
+  question  String    @db.VarChar(250)
+  answer    String?   @db.Text
+  priority  Int       @default(0)
+  isActive  Boolean   @default(true)
+  isDeleted Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@index([question])
+  @@index([priority])
+  @@index([isActive])
+  @@index([isDeleted])
+}

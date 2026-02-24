@@ -1,12 +1,11 @@
 // utils/path-sanitizer.ts
 const ALLOWED_BASE_PATHS = [
-  'products',
+  'websites',
   'avatars',
   'users',
   'blogs',
-  'orders',
-  'settings',
-  'banners',
+  'links',
+  'contact',
 ];
 
 export const sanitizeAndValidatePath = (path: string): string => {
